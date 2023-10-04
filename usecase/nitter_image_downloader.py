@@ -47,7 +47,7 @@ class NitterImageDownloader(IImageDownloader):
             "Sec-Fetch-User": "?1",
         }
         r = requests.get(url, headers=headers)
-        time.sleep(3)
+        time.sleep(5)
 
         if r.status_code != requests.codes.ok:
             raise Exception(f"status_code: {r.status_code}, url: {url}")
