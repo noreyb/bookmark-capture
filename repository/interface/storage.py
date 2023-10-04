@@ -3,5 +3,5 @@ import abc
 
 class IStorageHandler(metaclass=abc.ABCMeta):
     @abc.abstractmethod
-    def save_image(self, src_path, dst_dir) -> None:
+    def upload_file(self, src_path: str) -> None:
         raise NotImplementedError
