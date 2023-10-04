@@ -1,6 +1,8 @@
-from repository.interface.storage import IStorageHandler
-from pcloud import PyCloud
 import time
+
+from pcloud import PyCloud
+
+from repository.interface.storage import IStorageHandler
 
 
 class PCloudHandler(IStorageHandler):
