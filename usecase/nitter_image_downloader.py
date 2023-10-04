@@ -3,6 +3,7 @@ from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler
 import requests
 import time
+from PIL import Image, UnidentifiedImageError
 
 class NitterImageDownloader(IImageDownloader):
     def __init__(self, bookmark_handler: IBookmarkHandler, storage_handler: IStorageHandler, output_dir: str) -> None:
@@ -13,12 +14,19 @@ class NitterImageDownloader(IImageDownloader):
     def run(self) -> None:
         # pocketのurlを取得
         urls = self.bookmark.get_unread_items()
-        print(urls)
         # 画像ダウンロード       
-        # pcloudへ保存
+        for url in urls:
+            try:
+                output_path = self.download_image(url)
+            except Exception as e:
+                print(e)
+                continue
+
+            # pcloudへ保存
+            self.storage.upload_file(output_path)
         return None
 
-    def get_image(self, url: str) -> None:
+    def download_image(self, url: str) -> str:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:109.0) Gecko/20100101 Firefox/117.0',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
@@ -33,7 +41,18 @@ class NitterImageDownloader(IImageDownloader):
         }
         r = requests.get(url, headers=headers)
         time.sleep(2)
+
         if r.status_code != requests.codes.ok:
-            return None
+            raise Exception(f"status_code: {r.status_code}, url: {url}")
+
         file_name = url.split("/")[-1]
-        return (r.content, file_name)
+        output_path = f"{self.output_dir}/{file_name}"
+        with open(output_path, "wb") as f:
+            f.write(r.content)
+
+        try:
+            image = Image.open(output_path)
+        except UnidentifiedImageError:
+            raise Exception(f"UnidentifiedImageError: {url}")
+        image.save(output_path, quality=85)
+        return output_path
