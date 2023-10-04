@@ -38,10 +38,10 @@ class PocketHandler(IBookmarkHandler):
                 "search": url,
             },
         )
-        # Error handling 
+        # Error handling
         if resp.status_code != requests.codes.ok:
             raise Exception(f"status_code: {resp.status_code}, url: {url}")
-        
+
         resp = resp.json()
         time.sleep(1)
         item_id = resp["list"][list(resp["list"].keys())[0]]["item_id"]
