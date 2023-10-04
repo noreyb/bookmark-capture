@@ -16,7 +16,10 @@ if __name__ == "__main__":
     container.config.pc_username.from_env('PCLOUD_USERNAME')
     container.config.pc_password.from_env('PCLOUD_PASSWORD')
     container.config.from_dict(
-        {"output_dir": './output'}
+        {
+            "output_dir": './output',
+            "save_dir": "/nittr",
+        }
     )
     container.wire(modules=[sys.modules[__name__]])
     main()

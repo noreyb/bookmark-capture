@@ -2,8 +2,11 @@ from repository.interface.storage import IStorageHandler
 
 
 class PCloudHandler(IStorageHandler):
-    def __init__(self, username: str, password: str) -> None:
-        super().__init__()
+    def __init__(self, username: str, password: str, save_dir: str) -> None:
+        self.username = username
+        self.password = password
+        self.save_dir = save_dir
 
-    def save_image(self, src_path, dst_dir) -> None:
-        return super().save_image(src_path, dst_dir)
+    def upload_file(self, src_path: str) -> None:
+        # save_dirを使う
+        return super().upload_file(src_path)
