@@ -21,9 +21,8 @@ class NitterImageDownloader(IImageDownloader):
             except Exception as e:
                 print(e)
                 continue
-
-            # pcloudへ保存
             self.storage.upload_file(output_path)
+            self.bookmark.archive_item(url)
         return None
 
     def download_image(self, url: str) -> str:
@@ -40,7 +39,7 @@ class NitterImageDownloader(IImageDownloader):
             'Sec-Fetch-User': '?1',
         }
         r = requests.get(url, headers=headers)
-        time.sleep(2)
+        time.sleep(3)
 
         if r.status_code != requests.codes.ok:
             raise Exception(f"status_code: {r.status_code}, url: {url}")
