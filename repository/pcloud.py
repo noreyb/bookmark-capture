@@ -1,4 +1,6 @@
 from repository.interface.storage import IStorageHandler
+from pcloud import PyCloud
+import time
 
 
 class PCloudHandler(IStorageHandler):
@@ -8,5 +10,7 @@ class PCloudHandler(IStorageHandler):
         self.save_dir = save_dir
 
     def upload_file(self, src_path: str) -> None:
-        # save_dirを使う
-        return super().upload_file(src_path)
+        pc = PyCloud(self.username, self.password)
+        pc.uploadfile(files=[src_path], path=self.save_dir)
+        time.sleep(1)
+        return None
