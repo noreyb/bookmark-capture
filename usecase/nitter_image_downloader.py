@@ -1,9 +1,12 @@
-from usecase.interface.image_downloader import IImageDownloader
+import time
+
+import requests
+from PIL import Image, UnidentifiedImageError
+
 from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler
-import requests
-import time
-from PIL import Image, UnidentifiedImageError
+from usecase.interface.image_downloader import IImageDownloader
+
 
 class NitterImageDownloader(IImageDownloader):
     def __init__(self, bookmark_handler: IBookmarkHandler, storage_handler: IStorageHandler, output_dir: str) -> None:

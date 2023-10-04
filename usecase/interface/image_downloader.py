@@ -1,4 +1,5 @@
 import abc
+
 from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler
 

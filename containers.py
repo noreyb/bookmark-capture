@@ -1,11 +1,13 @@
 # Dependency_injectorのContainerをusecase毎に作成する
 from dependency_injector import containers, providers
-from repository.pocket import PocketHandler
-from repository.pcloud import PCloudHandler
-from usecase.nitter_image_downloader import NitterImageDownloader
-from usecase.interface.image_downloader import IImageDownloader
+
 from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler
+from repository.pcloud import PCloudHandler
+from repository.pocket import PocketHandler
+from usecase.interface.image_downloader import IImageDownloader
+from usecase.nitter_image_downloader import NitterImageDownloader
+
 
 class NitterContainer(containers.DeclarativeContainer):
     config = providers.Configuration()

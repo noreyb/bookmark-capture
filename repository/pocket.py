@@ -1,6 +1,8 @@
-from repository.interface.bookmark import IBookmarkHandler
-import requests
 import time
+
+import requests
+
+from repository.interface.bookmark import IBookmarkHandler
 
 
 class PocketHandler(IBookmarkHandler):

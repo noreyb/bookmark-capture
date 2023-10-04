@@ -1,7 +1,10 @@
-from dependency_injector import providers, containers
 import sys
-from containers import NitterContainer
+
+from dependency_injector import containers, providers
 from dotenv import load_dotenv
+
+from containers import NitterContainer
+
 
 def main():
     image_downloader = container.image_downloader()
