@@ -12,9 +12,11 @@ class NitterImageDownloader(IImageDownloader):
 
     def run(self) -> None:
         # pocketのurlを取得
+        urls = self.bookmark.get_unread_items()
+        print(urls)
         # 画像ダウンロード       
         # pcloudへ保存
-        return super().run()
+        return None
 
     def get_image(self, url: str) -> None:
         headers = {
