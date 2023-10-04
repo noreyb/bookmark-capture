@@ -13,5 +13,5 @@ class IImageDownloader(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_image(self, url: str) -> None:
+    def download_image(self, url: str) -> None:
         raise NotImplementedError
