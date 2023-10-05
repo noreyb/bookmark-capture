@@ -4,7 +4,7 @@ import click
 from dependency_injector import containers, providers
 from dotenv import load_dotenv
 
-from containers import NGKContainer, NitterContainer, FDVContainer
+from containers import NGKContainer, NitterContainer, FDVContainer, BooruContainer
 
 
 def _get_wired_app(container, save_dir: str):
@@ -50,6 +50,14 @@ def fdv():
     image_downloader = _get_wired_app(container, "/fdv")
     image_downloader.run()
     print("fdv")
+
+
+@cli.command()
+def booru():
+    container = BooruContainer()
+    image_downloader = _get_wired_app(container, "/booru")
+    image_downloader.run()
+    print("booru")
 
 
 def main():
