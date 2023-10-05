@@ -1,20 +1,20 @@
 # Dependency_injectorのContainerをusecase毎に作成する
 from dependency_injector import containers, providers
 
+from repository.booru_pocket import BooruPocketHandler
+from repository.fdv_pocket import FDVPocketHandler
 from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler
+from repository.kmn_pocket import KMNPocketHandler
 from repository.ngk_pocket import NGKPocketHandler
 from repository.nitter_pocket import NitterPocketHandler
 from repository.pcloud import PCloudHandler
+from usecase.booru_image_downloader import BooruImageDownloader
+from usecase.fdv_image_downloader import FDVImageDownloader
 from usecase.interface.image_downloader import IImageDownloader
+from usecase.kmn_image_downloader import KMNImageDownloader
 from usecase.ngk_image_downloader import NGKImageDownloader
 from usecase.nitter_image_downloader import NitterImageDownloader
-from repository.fdv_pocket import FDVPocketHandler
-from usecase.fdv_image_downloader import FDVImageDownloader
-from repository.booru_pocket import BooruPocketHandler
-from usecase.booru_image_downloader import BooruImageDownloader
-from repository.kmn_pocket import KMNPocketHandler
-from usecase.kmn_image_downloader import KMNImageDownloader
 
 
 class NitterContainer(containers.DeclarativeContainer):
@@ -54,6 +54,7 @@ class NGKContainer(containers.DeclarativeContainer):
         output_dir=config.output_dir,
     )
 
+
 class FDVContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
     bookmark_handler = providers.Factory(
@@ -72,6 +73,7 @@ class FDVContainer(containers.DeclarativeContainer):
         output_dir=config.output_dir,
     )
 
+
 class BooruContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
     bookmark_handler = providers.Factory(
@@ -89,6 +91,7 @@ class BooruContainer(containers.DeclarativeContainer):
         storage_handler=storage_handler,
         output_dir=config.output_dir,
     )
+
 
 class KMNContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
