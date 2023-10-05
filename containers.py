@@ -11,6 +11,8 @@ from usecase.ngk_image_downloader import NGKImageDownloader
 from usecase.nitter_image_downloader import NitterImageDownloader
 from repository.fdv_pocket import FDVPocketHandler
 from usecase.fdv_image_downloader import FDVImageDownloader
+from repository.booru_pocket import BooruPocketHandler
+from usecase.booru_image_downloader import BooruImageDownloader
 
 
 class NitterContainer(containers.DeclarativeContainer):
@@ -68,14 +70,26 @@ class FDVContainer(containers.DeclarativeContainer):
         output_dir=config.output_dir,
     )
 
-# future work
-"""
 class BooruContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
-    bookmark_handler = providers.Factory(PocketHandler, token=config.token, consumer_key=config.consumer_key)
-    storage_handler = providers.Factory(PCloudHandler, username=config.pc_username, password=config.pc_password)
-    image_downloader = providers.Factory(BooruImageDownloader, bookmark_handler=bookmark_handler, storage_handler=storage_handler, output_dir=config.output_dir)
+    bookmark_handler = providers.Factory(
+        BooruPocketHandler, token=config.token, consumer_key=config.consumer_key
+    )
+    storage_handler = providers.Factory(
+        PCloudHandler,
+        username=config.pc_username,
+        password=config.pc_password,
+        save_dir=config.save_dir,
+    )
+    image_downloader = providers.Factory(
+        BooruImageDownloader,
+        bookmark_handler=bookmark_handler,
+        storage_handler=storage_handler,
+        output_dir=config.output_dir,
+    )
 
+# future work
+"""
 class KemonoContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
     bookmark_handler = providers.Factory(PocketHandler, token=config.token, consumer_key=config.consumer_key)
