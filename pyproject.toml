@@ -12,6 +12,7 @@ requests = "^2.31.0"
 python-dotenv = "^1.0.0"
 pillow = "^10.0.1"
 pcloud = "^1.2"
+click = "^8.1.7"
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.12.0"
