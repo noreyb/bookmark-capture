@@ -13,6 +13,8 @@ from repository.fdv_pocket import FDVPocketHandler
 from usecase.fdv_image_downloader import FDVImageDownloader
 from repository.booru_pocket import BooruPocketHandler
 from usecase.booru_image_downloader import BooruImageDownloader
+from repository.kmn_pocket import KMNPocketHandler
+from usecase.kmn_image_downloader import KMNImageDownloader
 
 
 class NitterContainer(containers.DeclarativeContainer):
@@ -88,11 +90,20 @@ class BooruContainer(containers.DeclarativeContainer):
         output_dir=config.output_dir,
     )
 
-# future work
-"""
-class KemonoContainer(containers.DeclarativeContainer):
+class KMNContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
-    bookmark_handler = providers.Factory(PocketHandler, token=config.token, consumer_key=config.consumer_key)
-    storage_handler = providers.Factory(PCloudHandler, username=config.pc_username, password=config.pc_password)
-    image_downloader = providers.Factory(KemonoImageDownloader, bookmark_handler=bookmark_handler, storage_handler=storage_handler, output_dir=config.output_dir)
-"""
+    bookmark_handler = providers.Factory(
+        KMNPocketHandler, token=config.token, consumer_key=config.consumer_key
+    )
+    storage_handler = providers.Factory(
+        PCloudHandler,
+        username=config.pc_username,
+        password=config.pc_password,
+        save_dir=config.save_dir,
+    )
+    image_downloader = providers.Factory(
+        KMNImageDownloader,
+        bookmark_handler=bookmark_handler,
+        storage_handler=storage_handler,
+        output_dir=config.output_dir,
+    )
