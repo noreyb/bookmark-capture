@@ -1,8 +1,8 @@
 import time
 
 import requests
-from PIL import Image, UnidentifiedImageError
 from bs4 import BeautifulSoup
+from PIL import Image, UnidentifiedImageError
 
 from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler

@@ -4,7 +4,13 @@ import click
 from dependency_injector import containers, providers
 from dotenv import load_dotenv
 
-from containers import NGKContainer, NitterContainer, FDVContainer, BooruContainer, KMNContainer
+from containers import (
+    BooruContainer,
+    FDVContainer,
+    KMNContainer,
+    NGKContainer,
+    NitterContainer,
+)
 
 
 def _get_wired_app(container, save_dir: str):

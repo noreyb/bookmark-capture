@@ -4,6 +4,7 @@ import requests
 
 from repository.base_pocket import BasePocketHandler
 
+
 class FDVPocketHandler(BasePocketHandler):
     def get_unread_items(self) -> list:
         url = "http://getpocket.com/v3/get"

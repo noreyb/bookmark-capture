@@ -1,9 +1,9 @@
-import time
 import json
+import time
+from urllib.parse import unquote, urlparse
 
 import requests
 from PIL import Image, UnidentifiedImageError
-from urllib.parse import unquote, urlparse
 
 from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler
