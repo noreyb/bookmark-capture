@@ -44,10 +44,13 @@ class NGKImageDownloader(IImageDownloader):
         if "." not in file_name:
             raise Exception(f"file_name: {file_name}, url: {url}")
 
-        with open(f"{output_dir}/{file_name}", "wb") as f:
+        output_path = f"{self.output_dir}/{file_name}"
+        with open(output_path, "wb") as f:
             f.write(r.content)
         try:
-            image = Image.open(f"{output_dir}/{file_name}")
+            image = Image.open(output_path)
         except UnidentifiedImageError:
             raise Exception(f"UnidentifiedImageError: {file_name}, url: {url}")
-        image.save(f"{output_dir}/{file_name}", quality=85)
+        image.save(output_path, quality=85)
+
+        return output_path

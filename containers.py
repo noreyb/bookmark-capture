@@ -3,12 +3,12 @@ from dependency_injector import containers, providers
 
 from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler
-from repository.pcloud import PCloudHandler
-from repository.nitter_pocket import NitterPocketHandler
 from repository.ngk_pocket import NGKPocketHandler
+from repository.nitter_pocket import NitterPocketHandler
+from repository.pcloud import PCloudHandler
 from usecase.interface.image_downloader import IImageDownloader
-from usecase.nitter_image_downloader import NitterImageDownloader
 from usecase.ngk_image_downloader import NGKImageDownloader
+from usecase.nitter_image_downloader import NitterImageDownloader
 
 
 class NitterContainer(containers.DeclarativeContainer):
@@ -29,6 +29,7 @@ class NitterContainer(containers.DeclarativeContainer):
         output_dir=config.output_dir,
     )
 
+
 class NGKContainer(containers.DeclarativeContainer):
     config = providers.Configuration()
     bookmark_handler = providers.Factory(
@@ -46,6 +47,7 @@ class NGKContainer(containers.DeclarativeContainer):
         storage_handler=storage_handler,
         output_dir=config.output_dir,
     )
+
 
 # future work
 """
