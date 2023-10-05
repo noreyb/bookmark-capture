@@ -9,6 +9,8 @@ from repository.pcloud import PCloudHandler
 from usecase.interface.image_downloader import IImageDownloader
 from usecase.ngk_image_downloader import NGKImageDownloader
 from usecase.nitter_image_downloader import NitterImageDownloader
+from repository.fdv_pocket import FDVPocketHandler
+from usecase.fdv_image_downloader import FDVImageDownloader
 
 
 class NitterContainer(containers.DeclarativeContainer):
@@ -48,6 +50,23 @@ class NGKContainer(containers.DeclarativeContainer):
         output_dir=config.output_dir,
     )
 
+class FDVContainer(containers.DeclarativeContainer):
+    config = providers.Configuration()
+    bookmark_handler = providers.Factory(
+        FDVPocketHandler, token=config.token, consumer_key=config.consumer_key
+    )
+    storage_handler = providers.Factory(
+        PCloudHandler,
+        username=config.pc_username,
+        password=config.pc_password,
+        save_dir=config.save_dir,
+    )
+    image_downloader = providers.Factory(
+        FDVImageDownloader,
+        bookmark_handler=bookmark_handler,
+        storage_handler=storage_handler,
+        output_dir=config.output_dir,
+    )
 
 # future work
 """

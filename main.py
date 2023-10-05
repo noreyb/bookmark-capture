@@ -4,7 +4,7 @@ import click
 from dependency_injector import containers, providers
 from dotenv import load_dotenv
 
-from containers import NGKContainer, NitterContainer
+from containers import NGKContainer, NitterContainer, FDVContainer
 
 
 def _get_wired_app(container, save_dir: str):
@@ -42,6 +42,14 @@ def ngk():
     image_downloader = _get_wired_app(container, "/ngk")
     image_downloader.run()
     print("ngk")
+
+
+@cli.command()
+def fdv():
+    container = FDVContainer()
+    image_downloader = _get_wired_app(container, "/fdv")
+    image_downloader.run()
+    print("fdv")
 
 
 def main():
