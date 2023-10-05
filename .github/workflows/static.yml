@@ -22,4 +22,4 @@ jobs:
           python-version: "3.11"
       - uses: Gr1N/setup-poetry@v8
       - run: poetry install --no-root
-      - run: POCKET_TOKEN=${{secrets.POCKET_TOKEN}} POCKET_CONSUMER_KEY=${{secrets.POCKET_CONSUMER_KEY}} PCLOUD_USERNAME=${{secrets.PCLOUD_USERNAME}} PCLOUD_PASSWORD=${{secrets.PCLOUD_PASSWORD}} poetry run python main.py
+      - run: POCKET_TOKEN=${{secrets.POCKET_TOKEN}} POCKET_CONSUMER_KEY=${{secrets.POCKET_CONSUMER_KEY}} PCLOUD_USERNAME=${{secrets.PCLOUD_USERNAME}} PCLOUD_PASSWORD=${{secrets.PCLOUD_PASSWORD}} poetry run python main.py nitter
