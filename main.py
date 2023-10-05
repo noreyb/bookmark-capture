@@ -1,19 +1,13 @@
 import sys
 
+import click
 from dependency_injector import containers, providers
 from dotenv import load_dotenv
 
-from containers import NitterContainer
+from containers import NGKContainer, NitterContainer
 
 
-def main():
-    image_downloader = container.image_downloader()
-    image_downloader.run()
-
-
-if __name__ == "__main__":
-    load_dotenv()
-    container = NitterContainer()
+def _get_wired_app(container, save_dir: str):
     container.config.token.from_env("POCKET_TOKEN")
     container.config.consumer_key.from_env("POCKET_CONSUMER_KEY")
     container.config.pc_username.from_env("PCLOUD_USERNAME")
@@ -21,8 +15,39 @@ if __name__ == "__main__":
     container.config.from_dict(
         {
             "output_dir": "./output",
-            "save_dir": "/nittr",
+            "save_dir": save_dir,
         }
     )
     container.wire(modules=[sys.modules[__name__]])
+    image_downloader = container.image_downloader()
+    return container.image_downloader()
+
+
+@click.group()
+def cli():
+    print("cli")
+
+
+@cli.command()
+def nitter():
+    container = NitterContainer()
+    image_downloader = _get_wired_app(container, "/nittr")
+    image_downloader.run()
+    print("nitter")
+
+
+@cli.command()
+def ngk():
+    container = NGKContainer()
+    image_downloader = _get_wired_app(container, "/ngk")
+    image_downloader.run()
+    print("ngk")
+
+
+def main():
+    cli()
+
+
+if __name__ == "__main__":
+    load_dotenv()
     main()

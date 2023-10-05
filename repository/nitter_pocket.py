@@ -5,7 +5,7 @@ import requests
 from repository.interface.bookmark import IBookmarkHandler
 
 
-class PocketHandler(IBookmarkHandler):
+class NitterPocketHandler(IBookmarkHandler):
     def __init__(self, token: str, consumer_key: str) -> None:
         self.token = token
         self.consumer_key = consumer_key
