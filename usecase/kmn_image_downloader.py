@@ -30,9 +30,9 @@ class KMNImageDownloader(IImageDownloader):
             except Exception as e:
                 print(e)
                 continue
-            print(output_path)
+            print(output_path, file=sys.stderr)
             for path in output_path:
-                print(path)
+                print(path, file=sys.stderr)
                 self.storage.upload_file(path)
             self.bookmark.archive_item(url)
         return None
