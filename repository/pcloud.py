@@ -14,5 +14,5 @@ class PCloudHandler(IStorageHandler):
     def upload_file(self, src_path: str) -> None:
         pc = PyCloud(self.username, self.password)
         pc.uploadfile(files=[src_path], path=self.save_dir)
-        time.sleep(1)
+        time.sleep(5)
         return None
