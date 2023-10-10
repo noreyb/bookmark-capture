@@ -47,6 +47,7 @@ class KMNImageDownloader(IImageDownloader):
             file_name = image_url.split("?f=")[1]
 
             r = requests.get(image_url)
+            print(image_url)
             time.sleep(1)
             output_path = f"{self.output_dir}/{file_name}"
             with open(output_path, "wb") as f:
