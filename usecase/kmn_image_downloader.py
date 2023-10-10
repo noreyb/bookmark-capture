@@ -30,7 +30,9 @@ class KMNImageDownloader(IImageDownloader):
             except Exception as e:
                 print(e)
                 continue
+            print(output_path)
             for path in output_path:
+                print(path)
                 self.storage.upload_file(path)
             self.bookmark.archive_item(url)
         return None
@@ -47,7 +49,6 @@ class KMNImageDownloader(IImageDownloader):
             file_name = image_url.split("?f=")[1]
 
             r = requests.get(image_url)
-            print(image_url)
             time.sleep(1)
             output_path = f"{self.output_dir}/{file_name}"
             with open(output_path, "wb") as f:
