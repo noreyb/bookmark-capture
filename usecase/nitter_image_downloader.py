@@ -1,4 +1,5 @@
 import time
+from urllib.parse import urldefrag
 
 import requests
 from PIL import Image, UnidentifiedImageError
@@ -25,6 +26,7 @@ class NitterImageDownloader(IImageDownloader):
         # 画像ダウンロード
         for url in urls:
             try:
+                url = urldefrag(url)[0]
                 output_path = self.download_image(url)
             except Exception as e:
                 print(e)
