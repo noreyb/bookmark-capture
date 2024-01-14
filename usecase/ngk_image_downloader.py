@@ -27,7 +27,7 @@ class NGKImageDownloader(IImageDownloader):
             try:
                 output_path = self.download_image(url)
             except Exception as e:
-                print(e)
+                self.bookmark.archive_item(url)
                 continue
             self.storage.upload_file(output_path)
             self.bookmark.archive_item(url)
