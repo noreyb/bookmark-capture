@@ -27,6 +27,9 @@ class BasePocketHandler(IBookmarkHandler):
 
         resp = resp.json()
         time.sleep(1)
+        if resp["status"] == 2:
+            # This item has been deleted
+            return None
         item_id = resp["list"][list(resp["list"].keys())[0]]["item_id"]
 
         # archive item
