@@ -1,16 +1,13 @@
-import sys
+import os
 
 import click
-from dependency_injector import containers, providers
-from dotenv import load_dotenv
+from injector import Injector
 
-from containers import (
-    BooruContainer,
-    FDVContainer,
-    KMNContainer,
-    NGKContainer,
-    NitterContainer,
-)
+from containers import BooruFactory, FDVFactory, KMNFactory, NGKFactory, TwitterFactory
+from usecase.interface.image_downloader import IImageDownloader
+
+# from dependency_injector import containers, providers
+# from dotenv import load_dotenv
 
 
 def _get_wired_app(container, save_dir: str):
@@ -36,42 +33,77 @@ def cli():
 
 @cli.command()
 def nitter():
-    container = NitterContainer()
-    image_downloader = _get_wired_app(container, "/nittr")
+    factory = TwitterFactory(
+        token=os.getenv("POCKET_TOKEN"),
+        consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
+        pc_username=os.getenv("PCLOUD_USERNAME"),
+        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        save_dir="/nittr",
+        output_dir="./output",
+    )
+    injector = Injector(factory.configure)
+    image_downloader = injector.get(IImageDownloader)
     image_downloader.run()
-    print("nitter")
 
 
 @cli.command()
 def ngk():
-    container = NGKContainer()
-    image_downloader = _get_wired_app(container, "/ngk")
+    factory = NGKFactory(
+        token=os.getenv("POCKET_TOKEN"),
+        consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
+        pc_username=os.getenv("PCLOUD_USERNAME"),
+        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        save_dir="/ngk",
+        output_dir="./output",
+    )
+    injector = Injector(factory.configure)
+    image_downloader = injector.get(IImageDownloader)
     image_downloader.run()
-    print("ngk")
 
 
 @cli.command()
 def fdv():
-    container = FDVContainer()
-    image_downloader = _get_wired_app(container, "/fdv")
+    factory = FDVFactory(
+        token=os.getenv("POCKET_TOKEN"),
+        consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
+        pc_username=os.getenv("PCLOUD_USERNAME"),
+        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        save_dir="/fdv",
+        output_dir="./output",
+    )
+    injector = Injector(factory.configure)
+    image_downloader = injector.get(IImageDownloader)
     image_downloader.run()
-    print("fdv")
 
 
 @cli.command()
 def booru():
-    container = BooruContainer()
-    image_downloader = _get_wired_app(container, "/booru")
+    factory = BooruFactory(
+        token=os.getenv("POCKET_TOKEN"),
+        consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
+        pc_username=os.getenv("PCLOUD_USERNAME"),
+        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        save_dir="/booru",
+        output_dir="./output",
+    )
+    injector = Injector(factory.configure)
+    image_downloader = injector.get(IImageDownloader)
     image_downloader.run()
-    print("booru")
 
 
 @cli.command()
 def kmn():
-    container = KMNContainer()
-    image_downloader = _get_wired_app(container, "/kmn")
+    factory = KMNFactory(
+        token=os.getenv("POCKET_TOKEN"),
+        consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
+        pc_username=os.getenv("PCLOUD_USERNAME"),
+        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        save_dir="/kmn",
+        output_dir="./output",
+    )
+    injector = Injector(factory.configure)
+    image_downloader = injector.get(IImageDownloader)
     image_downloader.run()
-    print("kmn")
 
 
 def main():
@@ -79,5 +111,5 @@ def main():
 
 
 if __name__ == "__main__":
-    load_dotenv()
+    # load_dotenv()
     main()

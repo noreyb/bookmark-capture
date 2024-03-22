@@ -9,7 +9,7 @@ from repository.interface.storage import IStorageHandler
 from usecase.interface.image_downloader import IImageDownloader
 
 
-class NitterImageDownloader(IImageDownloader):
+class TwitterImageDownloader(IImageDownloader):
     def __init__(
         self,
         bookmark_handler: IBookmarkHandler,
