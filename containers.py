@@ -1,5 +1,4 @@
-# Dependency_injectorのContainerをusecase毎に作成する
-from dependency_injector import containers, providers
+from injector import Module
 
 from repository.booru_pocket import BooruPocketHandler
 from repository.fdv_pocket import FDVPocketHandler
@@ -7,106 +6,186 @@ from repository.interface.bookmark import IBookmarkHandler
 from repository.interface.storage import IStorageHandler
 from repository.kmn_pocket import KMNPocketHandler
 from repository.ngk_pocket import NGKPocketHandler
-from repository.nitter_pocket import NitterPocketHandler
 from repository.pcloud import PCloudHandler
+from repository.twitter_pocket import TwitterPocketHandler
 from usecase.booru_image_downloader import BooruImageDownloader
 from usecase.fdv_image_downloader import FDVImageDownloader
 from usecase.interface.image_downloader import IImageDownloader
 from usecase.kmn_image_downloader import KMNImageDownloader
 from usecase.ngk_image_downloader import NGKImageDownloader
-from usecase.nitter_image_downloader import NitterImageDownloader
+from usecase.twitter_image_downloader import TwitterImageDownloader
 
 
-class NitterContainer(containers.DeclarativeContainer):
-    config = providers.Configuration()
-    bookmark_handler = providers.Factory(
-        NitterPocketHandler, token=config.token, consumer_key=config.consumer_key
-    )
-    storage_handler = providers.Factory(
-        PCloudHandler,
-        username=config.pc_username,
-        password=config.pc_password,
-        save_dir=config.save_dir,
-    )
-    image_downloader = providers.Factory(
-        NitterImageDownloader,
-        bookmark_handler=bookmark_handler,
-        storage_handler=storage_handler,
-        output_dir=config.output_dir,
-    )
+class TwitterFatory(Module):
+    def __init__(
+        self,
+        token: str,
+        consumer_key: str,
+        pc_username: str,
+        pc_password: str,
+        save_dir: str,
+        output_dir: str,
+    ):
+        self.token = token
+        self.consumer_key = consumer_key
+        self.pc_username = pc_username
+        self.pc_password = pc_password
+        self.save_dir = save_dir
+        self.output_dir = output_dir
+
+    def configure(self, binder):
+        binder.bind(
+            IImageDownloader,
+            to=TwitterImageDownloader(
+                TwitterPocketHandler(
+                    token=self.token,
+                    consumer_key=self.consumer_key,
+                ),
+                PCloudHandler(
+                    username=self.pc_username,
+                    password=self.pc_password,
+                    save_dir=self.save_dir,
+                ),
+                self.output_dir,
+            ),
+        )
 
 
-class NGKContainer(containers.DeclarativeContainer):
-    config = providers.Configuration()
-    bookmark_handler = providers.Factory(
-        NGKPocketHandler, token=config.token, consumer_key=config.consumer_key
-    )
-    storage_handler = providers.Factory(
-        PCloudHandler,
-        username=config.pc_username,
-        password=config.pc_password,
-        save_dir=config.save_dir,
-    )
-    image_downloader = providers.Factory(
-        NGKImageDownloader,
-        bookmark_handler=bookmark_handler,
-        storage_handler=storage_handler,
-        output_dir=config.output_dir,
-    )
+class NGKFatory(Module):
+    def __init__(
+        self,
+        token: str,
+        consumer_key: str,
+        pc_username: str,
+        pc_password: str,
+        save_dir: str,
+        output_dir: str,
+    ):
+        self.token = token
+        self.consumer_key = consumer_key
+        self.pc_username = pc_username
+        self.pc_password = pc_password
+        self.save_dir = save_dir
+        self.output_dir = output_dir
+
+    def configure(self, binder):
+        binder.bind(
+            IImageDownloader,
+            to=NGKImageDownloader(
+                NGKPocketHandler(
+                    token=self.token,
+                    consumer_key=self.consumer_key,
+                ),
+                PCloudHandler(
+                    username=self.pc_username,
+                    password=self.pc_password,
+                    save_dir=self.save_dir,
+                ),
+                self.output_dir,
+            ),
+        )
 
 
-class FDVContainer(containers.DeclarativeContainer):
-    config = providers.Configuration()
-    bookmark_handler = providers.Factory(
-        FDVPocketHandler, token=config.token, consumer_key=config.consumer_key
-    )
-    storage_handler = providers.Factory(
-        PCloudHandler,
-        username=config.pc_username,
-        password=config.pc_password,
-        save_dir=config.save_dir,
-    )
-    image_downloader = providers.Factory(
-        FDVImageDownloader,
-        bookmark_handler=bookmark_handler,
-        storage_handler=storage_handler,
-        output_dir=config.output_dir,
-    )
+class FDVFatory(Module):
+    def __init__(
+        self,
+        token: str,
+        consumer_key: str,
+        pc_username: str,
+        pc_password: str,
+        save_dir: str,
+        output_dir: str,
+    ):
+        self.token = token
+        self.consumer_key = consumer_key
+        self.pc_username = pc_username
+        self.pc_password = pc_password
+        self.save_dir = save_dir
+        self.output_dir = output_dir
+
+    def configure(self, binder):
+        binder.bind(
+            IImageDownloader,
+            to=FDVImageDownloader(
+                FDVPocketHandler(
+                    token=self.token,
+                    consumer_key=self.consumer_key,
+                ),
+                PCloudHandler(
+                    username=self.pc_username,
+                    password=self.pc_password,
+                    save_dir=self.save_dir,
+                ),
+                self.output_dir,
+            ),
+        )
 
 
-class BooruContainer(containers.DeclarativeContainer):
-    config = providers.Configuration()
-    bookmark_handler = providers.Factory(
-        BooruPocketHandler, token=config.token, consumer_key=config.consumer_key
-    )
-    storage_handler = providers.Factory(
-        PCloudHandler,
-        username=config.pc_username,
-        password=config.pc_password,
-        save_dir=config.save_dir,
-    )
-    image_downloader = providers.Factory(
-        BooruImageDownloader,
-        bookmark_handler=bookmark_handler,
-        storage_handler=storage_handler,
-        output_dir=config.output_dir,
-    )
+class BooruFatory(Module):
+    def __init__(
+        self,
+        token: str,
+        consumer_key: str,
+        pc_username: str,
+        pc_password: str,
+        save_dir: str,
+        output_dir: str,
+    ):
+        self.token = token
+        self.consumer_key = consumer_key
+        self.pc_username = pc_username
+        self.pc_password = pc_password
+        self.save_dir = save_dir
+        self.output_dir = output_dir
+
+    def configure(self, binder):
+        binder.bind(
+            IImageDownloader,
+            to=BooruImageDownloader(
+                BooruPocketHandler(
+                    token=self.token,
+                    consumer_key=self.consumer_key,
+                ),
+                PCloudHandler(
+                    username=self.pc_username,
+                    password=self.pc_password,
+                    save_dir=self.save_dir,
+                ),
+                self.output_dir,
+            ),
+        )
 
 
-class KMNContainer(containers.DeclarativeContainer):
-    config = providers.Configuration()
-    bookmark_handler = providers.Factory(
-        KMNPocketHandler, token=config.token, consumer_key=config.consumer_key
-    )
-    storage_handler = providers.Factory(
-        PCloudHandler,
-        username=config.pc_username,
-        password=config.pc_password,
-        save_dir=config.save_dir,
-    )
-    image_downloader = providers.Factory(
-        KMNImageDownloader,
-        bookmark_handler=bookmark_handler,
-        storage_handler=storage_handler,
-        output_dir=config.output_dir,
-    )
+class KMNFatory(Module):
+    def __init__(
+        self,
+        token: str,
+        consumer_key: str,
+        pc_username: str,
+        pc_password: str,
+        save_dir: str,
+        output_dir: str,
+    ):
+        self.token = token
+        self.consumer_key = consumer_key
+        self.pc_username = pc_username
+        self.pc_password = pc_password
+        self.save_dir = save_dir
+        self.output_dir = output_dir
+
+    def configure(self, binder):
+        binder.bind(
+            IImageDownloader,
+            to=KMNImageDownloader(
+                KMNPocketHandler(
+                    token=self.token,
+                    consumer_key=self.consumer_key,
+                ),
+                PCloudHandler(
+                    username=self.pc_username,
+                    password=self.pc_password,
+                    save_dir=self.save_dir,
+                ),
+                self.output_dir,
+            ),
+        )

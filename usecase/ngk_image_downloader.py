@@ -36,7 +36,7 @@ class NGKImageDownloader(IImageDownloader):
     def download_image(self, url: str) -> str:
         r = requests.get(url)
         time.sleep(1)
-        
+
         file_name = url.split("/")[-1]
         # ファイル名の揺れを吸収するための処理
         if "?" in file_name:
