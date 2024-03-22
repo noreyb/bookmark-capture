@@ -37,7 +37,7 @@ def nitter():
         token=os.getenv("POCKET_TOKEN"),
         consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
         pc_username=os.getenv("PCLOUD_USERNAME"),
-        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        pc_password=os.getenv("PCLOUD_PASSWORD"),
         save_dir="/nittr",
         output_dir="./output",
     )
@@ -52,7 +52,7 @@ def ngk():
         token=os.getenv("POCKET_TOKEN"),
         consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
         pc_username=os.getenv("PCLOUD_USERNAME"),
-        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        pc_password=os.getenv("PCLOUD_PASSWORD"),
         save_dir="/ngk",
         output_dir="./output",
     )
@@ -67,7 +67,7 @@ def fdv():
         token=os.getenv("POCKET_TOKEN"),
         consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
         pc_username=os.getenv("PCLOUD_USERNAME"),
-        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        pc_password=os.getenv("PCLOUD_PASSWORD"),
         save_dir="/fdv",
         output_dir="./output",
     )
@@ -82,7 +82,7 @@ def booru():
         token=os.getenv("POCKET_TOKEN"),
         consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
         pc_username=os.getenv("PCLOUD_USERNAME"),
-        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        pc_password=os.getenv("PCLOUD_PASSWORD"),
         save_dir="/booru",
         output_dir="./output",
     )
@@ -97,7 +97,7 @@ def kmn():
         token=os.getenv("POCKET_TOKEN"),
         consumer_key=os.getenv("POCKET_CONSUMER_KEY"),
         pc_username=os.getenv("PCLOUD_USERNAME"),
-        pc_password=os.getenv("PCLOUD_PASSWOTRD"),
+        pc_password=os.getenv("PCLOUD_PASSWORD"),
         save_dir="/kmn",
         output_dir="./output",
     )
