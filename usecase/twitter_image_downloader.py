@@ -1,5 +1,6 @@
+import os
 import time
-from urllib.parse import urldefrag
+from urllib.parse import unquote, urlparse
 
 import requests
 from PIL import Image, UnidentifiedImageError
@@ -26,7 +27,7 @@ class TwitterImageDownloader(IImageDownloader):
         # 画像ダウンロード
         for url in urls:
             try:
-                url = urldefrag(url)[0]
+                # url = urldefrag(url)[0]
                 output_path = self.download_image(url)
             except Exception as e:
                 print(e)
@@ -48,20 +49,30 @@ class TwitterImageDownloader(IImageDownloader):
             "Sec-Fetch-Site": "same-origin",
             "Sec-Fetch-User": "?1",
         }
-        r = requests.get(url, headers=headers)
-        time.sleep(5)
+        try:
+            r = requests.get(url, headers=headers)
+            r.raise_for_status()
+            time.sleep(5)
 
-        if r.status_code != requests.codes.ok:
+            parsed_url = urlparse(url)
+            query_params = dict(qc.split("=") for qc in parsed_url.query.split("&"))
+            extension = query_params.get("format", "jpg")
+
+            path_parts = parsed_url.path.split("/")
+            file_name = f"{path_parts[-1]}.{extension}"
+            file_name = unquote(file_name)
+
+            output_path = os.path.join(self.output_dir, file_name)
+            with open(output_path, "wb") as f:
+                f.write(r.content)
+
+            image = Image.open(output_path)
+            image.save(output_path, quality=85)
+
+            return output_path
+
+        except requests.exceptions.RequestException as e:
             raise Exception(f"status_code: {r.status_code}, url: {url}")
 
-        file_name = url.split("/")[-1]
-        output_path = f"{self.output_dir}/{file_name}"
-        with open(output_path, "wb") as f:
-            f.write(r.content)
-
-        try:
-            image = Image.open(output_path)
-        except UnidentifiedImageError:
+        except UnidentifiedImageError as e:
             raise Exception(f"UnidentifiedImageError: {url}")
-        image.save(output_path, quality=85)
-        return output_path
