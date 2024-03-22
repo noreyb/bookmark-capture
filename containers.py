@@ -16,7 +16,7 @@ from usecase.ngk_image_downloader import NGKImageDownloader
 from usecase.twitter_image_downloader import TwitterImageDownloader
 
 
-class TwitterFatory(Module):
+class TwitterFactory(Module):
     def __init__(
         self,
         token: str,
@@ -51,7 +51,7 @@ class TwitterFatory(Module):
         )
 
 
-class NGKFatory(Module):
+class NGKFactory(Module):
     def __init__(
         self,
         token: str,
@@ -86,7 +86,7 @@ class NGKFatory(Module):
         )
 
 
-class FDVFatory(Module):
+class FDVFactory(Module):
     def __init__(
         self,
         token: str,
@@ -121,7 +121,7 @@ class FDVFatory(Module):
         )
 
 
-class BooruFatory(Module):
+class BooruFactory(Module):
     def __init__(
         self,
         token: str,
@@ -156,7 +156,7 @@ class BooruFatory(Module):
         )
 
 
-class KMNFatory(Module):
+class KMNFactory(Module):
     def __init__(
         self,
         token: str,
