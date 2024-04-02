@@ -50,6 +50,7 @@ class TwitterImageDownloader(IImageDownloader):
             "Sec-Fetch-User": "?1",
         }
         try:
+            print(url)
             r = requests.get(url, headers=headers)
             r.raise_for_status()
             time.sleep(5)
