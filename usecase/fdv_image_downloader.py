@@ -58,7 +58,7 @@ class FDVImageDownloader(IImageDownloader):
         for f in files:
             image_url = unquote(f["url"])
             r = requests.get(image_url)
-            file_name = image_url.split("/")[-1].split("?")[0]
+            file_name = image_url.split("/")[-1].split("?")[0] # sensitiveのqueryを削除
 
             output_path = f"{self.output_dir}/{file_name}"
             with open(output_path, "wb") as f:
