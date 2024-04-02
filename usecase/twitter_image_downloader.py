@@ -1,6 +1,7 @@
 import os
 import time
 from urllib.parse import unquote, urlparse
+import html
 
 import requests
 from PIL import Image, UnidentifiedImageError
@@ -50,7 +51,7 @@ class TwitterImageDownloader(IImageDownloader):
             "Sec-Fetch-User": "?1",
         }
         try:
-            url = unquote(url)
+            url = html.unescape(url)
             r = requests.get(url, headers=headers)
             r.raise_for_status()
             time.sleep(5)
