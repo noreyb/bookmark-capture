@@ -35,7 +35,7 @@ class KMNImageDownloader(IImageDownloader):
             for path in output_path:
                 print(path, file=sys.stderr)
                 self.storage.upload_file(path)
-            self.bookmark.archive_item(url)
+            self.bookmark.delete_item(url)
         return None
 
     def download_image(self, url: str) -> str:
