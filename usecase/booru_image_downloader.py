@@ -31,7 +31,7 @@ class BooruImageDownloader(IImageDownloader):
                 print(e)
                 continue
             self.storage.upload_file(output_path)
-            self.bookmark.archive_item(url)
+            self.bookmark.delete_item(url)
         return None
 
     def download_image(self, url: str) -> str:
