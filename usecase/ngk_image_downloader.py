@@ -27,10 +27,10 @@ class NGKImageDownloader(IImageDownloader):
             try:
                 output_path = self.download_image(url)
             except Exception as e:
-                self.bookmark.archive_item(url)
+                self.bookmark.delete_item(url)
                 continue
             self.storage.upload_file(output_path)
-            self.bookmark.archive_item(url)
+            self.bookmark.delete_item(url)
         return None
 
     def download_image(self, url: str) -> str:
