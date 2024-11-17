@@ -10,3 +10,7 @@ class IBookmarkHandler(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def archive_item(self, url) -> None:
         raise NotImplementedError
+        
+    @abc.abstractmethod
+    def delete_item(self, url) -> None:
+        raise NotImplementedError
